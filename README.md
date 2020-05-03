@@ -1,1 +1,4 @@
-# IN301-projetADN-
+# IN301-langage C DNA Project
+backup directory
+
+#
