@@ -23,7 +23,7 @@ all: build $(EXEC)
 build:
 	./build.sh
 
-$(EXEC): main.o struct.o lire.o sequence.o
+$(EXEC): main.o struct.o lire.o manipulation.o
 	$(CC) $(CFLAGS) target/*.o -o bin/$@
 
 #################################
@@ -39,7 +39,7 @@ struct.o: src/include/struct.c src/include/struct.h
 lire.o: src/lib/lire.c src/lib/lire.h
 	$(CC) -c $(CFLAGS) $< -o target/$@
 
-sequence.o: src/lib/sequence.c src/lib/sequence.h
+manipulation.o: src/lib/manipulation.c src/lib/manipulation.h
 	$(CC) -c $(CFLAGS) $< -o target/$@
 
 #################################

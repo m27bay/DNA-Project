@@ -3,14 +3,14 @@
 sequence_t* lireFichier(const char* nomFichier, int8_t* tailleTableau) {
     //
     if (!nomFichier) {
-        printf("ERREUR : Dans le fichier 'lire.c'. Dans la fonction 'initialiserSequence'. Pointeur nul.\n");
+        printf("ERREUR : Dans le fichier 'lire.c'. Dans la fonction 'lireFichier'. Pointeur nul.\n");
         exit(EXIT_FAILURE);
     }
 
     //
     sequence_t* tableauSeq = malloc(TAILLECHAINE * sizeof(sequence_t));
     if (!tableauSeq) {
-        printf("ERREUR : Dans le fichier 'lire.c'. Dans la fonction 'initialiserSequence'. Pointeur nul.\n");
+        printf("ERREUR : Dans le fichier 'lire.c'. Dans la fonction 'lireFichier'. Pointeur nul.\n");
         exit(EXIT_FAILURE);
     }
 
@@ -24,15 +24,21 @@ sequence_t* lireFichier(const char* nomFichier, int8_t* tailleTableau) {
     //
     if (fichier) {
         //
-        char chaineLu[TAILLECHAINE];
+        char chaineLu[TAILLECHAINE] = "";
         
         //
         while(fgets(chaineLu, TAILLECHAINE, fichier) != NULL) {
             //
-            tableauSeq[positionSeq].taille = strlen(chaineLu);
-            tableauSeq[positionSeq].chaine = malloc(tableauSeq[positionSeq].taille * sizeof(char));
-            chaineLu[strlen(chaineLu) - 1] = '\0';
-            strcpy(tableauSeq[positionSeq].chaine, chaineLu);
+            size_t tailleChaineLu = strlen(chaineLu);
+            tableauSeq[positionSeq].taille = tailleChaineLu - 1;
+            tableauSeq[positionSeq].chaine = malloc(tableauSeq[positionSeq].taille + 1 * sizeof(char));
+            if (!tableauSeq[positionSeq].chaine) {
+                printf("ERREUR : Dans le fichier 'lire.c'. Dans la fonction 'lireFichier'. Pointeur nul.\n");
+                exit(EXIT_FAILURE);
+            }
+
+            strncpy(tableauSeq[positionSeq].chaine, chaineLu, tailleChaineLu - 1);
+            tableauSeq[positionSeq].chaine[tableauSeq[positionSeq].taille] = '\0';
             positionSeq++;
         }
 
@@ -41,7 +47,7 @@ sequence_t* lireFichier(const char* nomFichier, int8_t* tailleTableau) {
         *tailleTableau = positionSeq;
     } else {
         //
-        printf("ERREUR : Dans le fichier 'lire.c'. Dans la fonction 'initialiserSequence'. Impossible d'ouvrir le fichier.\n");
+        printf("ERREUR : Dans le fichier 'lire.c'. Dans la fonction 'lireFichier'. Impossible d'ouvrir le fichier.\n");
         exit(EXIT_FAILURE);
     }
 
